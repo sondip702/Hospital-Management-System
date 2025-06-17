@@ -1,0 +1,100 @@
+{
+    "message": "User registered",
+    "user": {
+        "id": 24,
+        "username": "john_doe1",
+        "email": "john1@example.com",
+        "password": "$2b$10$FUsuXXCaLMRtFZb0uP5tFuH892AXJMeKtVMIJNdxayUJ5VgaT0A9S",
+        "role": "patient",
+        "updatedAt": "2025-06-15T06:26:21.959Z",
+        "createdAt": "2025-06-15T06:26:21.959Z"
+    }
+    {
+  "username": "john_doe1",
+  "email": "john1@example.com",
+  "password": "password123",
+  "role": "patient"
+}
+
+}
+{
+    "message": "User registered",
+    "user": {
+        "id": 25,
+        "username": "dr_smith",
+        "email": "drsmith@example.com",
+        "password": "$2b$10$6mBRGb0Hp8OZzXM7bH6Tse/yAOOjTBIiJaBt3BQN2tj4ztngvZ/nG",
+        "role": "doctor",
+        "updatedAt": "2025-06-15T06:27:11.524Z",
+        "createdAt": "2025-06-15T06:27:11.524Z"
+    }
+    {
+  "username": "dr_smith",
+  "email": "drsmith@example.com",
+  "password": "securepass456",
+  "role": "doctor"
+}
+
+}
+{
+    "message": "User registered",
+    "user": {
+        "id": 26,
+        "username": "dr_adams",
+        "email": "adams@example.com",
+        "password": "$2b$10$41esNkHr/52jovKT9JuCaOgdApjNRZOXZUxZrQfhXyT2Iw9uQOiM6",
+        "role": "doctor",
+        "updatedAt": "2025-06-15T06:28:39.669Z",
+        "createdAt": "2025-06-15T06:28:39.669Z"
+    }
+    {
+  "username": "dr_adams",
+  "email": "adams@example.com",
+  "password": "pass789",
+  "role": "doctor"
+}
+}
+
+
+Authorization: Bearer 
+Content-Type: application/json
+
+{
+  "doctorId": 26,
+  "appointmentDate": "2025-06-20",
+  "appointmentTime": "09:30:00",
+  "notes": "Discuss health issues"
+}
+
+
+CREATE TABLE Bookings (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  patientId INT NOT NULL,
+  doctorId INT NOT NULL,
+  coachId INT DEFAULT NULL,
+  appointmentDate DATE NOT NULL,
+  appointmentTime VARCHAR(20) NOT NULL,
+  scheduledAt DATETIME NOT NULL,
+  status ENUM('pending', 'confirmed', 'cancelled') DEFAULT 'pending',
+  notes TEXT NULL,
+  createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+  INDEX (patientId),
+  INDEX (doctorId),
+  INDEX (coachId),
+  INDEX (appointmentDate),
+  INDEX (scheduledAt)
+);
+
+CREATE TABLE Users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  username VARCHAR(100) NOT NULL,
+  email VARCHAR(150) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL,
+  role ENUM('patient', 'doctor', 'admin') DEFAULT 'patient',
+  resetToken VARCHAR(255),
+  resetTokenExpiry BIGINT,
+  createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
